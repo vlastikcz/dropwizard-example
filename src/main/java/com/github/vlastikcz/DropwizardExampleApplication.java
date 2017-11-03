@@ -1,17 +1,13 @@
 package com.github.vlastikcz;
 
-import java.util.ArrayList;
-
 import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.github.vlastikcz.core.CSVNotificationLoader;
-import com.github.vlastikcz.db.NotificationActionDAO;
-import com.github.vlastikcz.db.NotificationDAO;
-import com.github.vlastikcz.health.NotificationActionHealthCheck;
-import com.github.vlastikcz.health.NotificationHealthCheck;
 import com.github.vlastikcz.resources.NotificationActionResource;
+import com.github.vlastikcz.resources.NotificationNotificationActionResource;
 import com.github.vlastikcz.resources.NotificationResource;
+import com.github.vlastikcz.resources.UserNotificationGroupResource;
+import com.github.vlastikcz.resources.UserResource;
 
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -35,14 +31,14 @@ public class DropwizardExampleApplication extends Application<DropwizardExampleC
     @Override
     public void run(final DropwizardExampleConfiguration configuration,
                     final Environment environment) {
-
-        final NotificationDAO notificationDAO = new NotificationDAO(new CSVNotificationLoader().load());
-        final NotificationActionDAO notificationActionDAO = new NotificationActionDAO(new ArrayList<>());
-
-        environment.jersey().register(new NotificationResource(notificationDAO));
-        environment.jersey().register(new NotificationActionResource(notificationActionDAO));
-        environment.healthChecks().register("notification", new NotificationHealthCheck(notificationDAO));
-        environment.healthChecks().register("notificationAction", new NotificationActionHealthCheck(notificationActionDAO));
+        configuration.getCsvNotificationLoader().load();
+        environment.jersey().register(new NotificationResource(configuration.getNotificationService()));
+        environment.jersey().register(new NotificationActionResource(configuration.getNotificationActionService()));
+        environment.jersey().register(new UserNotificationGroupResource(configuration.getNotificationGroupService()));
+        environment.jersey().register(new NotificationNotificationActionResource(configuration.getNotificationActionService()));
+        environment.jersey().register(new UserResource(configuration.getUserService()));
+        //environment.healthChecks().register("notification", new NotificationHealthCheck(notificationDtoRepository));
+        //environment.healthChecks().register("notificationAction", new NotificationActionHealthCheck(notificationActionDtoRepository));
 
         environment.jersey().getResourceConfig()
                 .packages("org.glassfish.jersey.examples.linking")

@@ -1,4 +1,4 @@
-package com.github.vlastikcz.core;
+package com.github.vlastikcz.core.serializer;
 
 import java.io.IOException;
 import java.util.List;

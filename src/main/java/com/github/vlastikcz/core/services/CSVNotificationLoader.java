@@ -1,4 +1,4 @@
-package com.github.vlastikcz.core;
+package com.github.vlastikcz.core.services;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,10 +14,25 @@ import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.vlastikcz.api.NotificationEventSubType;
+import com.github.vlastikcz.api.NotificationEventType;
+import com.github.vlastikcz.core.dto.NotificationDto;
+import com.github.vlastikcz.core.dto.UserDto;
+import com.github.vlastikcz.core.repository.NotificationDtoRepository;
+import com.github.vlastikcz.core.repository.UserDtoRepository;
+
 public class CSVNotificationLoader {
     private static final Logger logger = LoggerFactory.getLogger(CSVNotificationLoader.class);
 
-    public List<Notification> load() {
+    private final NotificationDtoRepository notificationDtoRepository;
+    private final UserDtoRepository userDtoRepository;
+
+    public CSVNotificationLoader(NotificationDtoRepository notificationDtoRepository, UserDtoRepository userDtoRepository) {
+        this.notificationDtoRepository = notificationDtoRepository;
+        this.userDtoRepository = userDtoRepository;
+    }
+
+    public List<NotificationDto> load() {
         final Reader in = new InputStreamReader(CSVNotificationLoader.class.getResourceAsStream("/fixtures.csv"));
 
         final Iterable<CSVRecord> records;
@@ -28,29 +43,31 @@ public class CSVNotificationLoader {
             return Collections.emptyList();
         }
 
-        final List<Notification> result = new ArrayList<>();
+        final List<NotificationDto> notificationDtos = new ArrayList<>();
         for (CSVRecord record : records) {
-            String notificationGuid = record.get("notificationGuid");
-            String userGuid = record.get("userGuid");
-            String title = record.get("title");
-            String content = record.get("content");
-            String eventType = record.get("eventType");
-            String eventSubtype = record.get("eventSubtype");
-            String eventTimestamp = record.get("eventTimestamp");
+            final UUID notificationGuid = UUID.fromString(record.get("notificationGuid"));
+            final UUID userGuid = UUID.fromString(record.get("userGuid"));
+            final String title = record.get("title");
+            final String content = record.get("content");
+            final String eventType = record.get("eventType");
+            final String eventSubtype = record.get("eventSubtype");
+            final String eventTimestamp = record.get("eventTimestamp");
 
-            final Notification notification = new Notification(
-                    UUID.fromString(notificationGuid),
-                    UUID.fromString(userGuid),
+            final NotificationDto notificationDto = new NotificationDto(
+                    notificationGuid,
+                    userGuid,
                     title,
                     content,
                     findNotificationEventType(eventType),
                     findNotificationEventSubType(eventSubtype),
                     Instant.ofEpochMilli(Long.valueOf(eventTimestamp))
             );
-            result.add(notification);
+            final UserDto userDto = new UserDto(userGuid);
+            notificationDtoRepository.createIfNotExists(notificationDto);
+            userDtoRepository.createIfNotExists(userDto);
         }
 
-        return result;
+        return notificationDtos;
     }
 
     private static NotificationEventSubType findNotificationEventSubType(String name) {

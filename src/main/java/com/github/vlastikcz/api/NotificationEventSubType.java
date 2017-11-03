@@ -1,4 +1,4 @@
-package com.github.vlastikcz.core;
+package com.github.vlastikcz.api;
 
 public enum NotificationEventSubType {
     YOUTUBE,
