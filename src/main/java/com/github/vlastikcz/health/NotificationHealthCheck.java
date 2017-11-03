@@ -1,18 +1,20 @@
 package com.github.vlastikcz.health;
 
+import java.util.UUID;
+
 import com.codahale.metrics.health.HealthCheck;
-import com.github.vlastikcz.core.repository.NotificationDtoRepository;
+import com.github.vlastikcz.core.services.NotificationService;
 
 public class NotificationHealthCheck extends HealthCheck {
-    private final NotificationDtoRepository notificationDtoRepository;
+    private final NotificationService notificationService;
 
-    public NotificationHealthCheck(NotificationDtoRepository notificationDtoRepository) {
-        this.notificationDtoRepository = notificationDtoRepository;
+    public NotificationHealthCheck(final NotificationService notificationService) {
+        this.notificationService = notificationService;
     }
 
     @Override
     protected Result check() throws Exception {
-        notificationDtoRepository.findAll();
+        notificationService.findById(UUID.randomUUID());
         return Result.healthy();
     }
 }

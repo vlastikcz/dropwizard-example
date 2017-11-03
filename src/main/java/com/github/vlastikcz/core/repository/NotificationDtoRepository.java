@@ -1,23 +1,24 @@
 package com.github.vlastikcz.core.repository;
 
+import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.github.vlastikcz.core.dto.NotificationDto;
 
+import static java.util.Objects.requireNonNull;
+
 public class NotificationDtoRepository {
     private final Map<UUID, NotificationDto> notificationDtos;
 
     public NotificationDtoRepository(final Map<UUID, NotificationDto> notificationDtos) {
-        this.notificationDtos = notificationDtos;
+        this.notificationDtos = requireNonNull(notificationDtos, "'notificationDtos' cannot be null");
     }
 
-    public Optional<NotificationDto> findById(UUID id) {
+    public Optional<NotificationDto> findById(final UUID id) {
         return Optional.ofNullable(notificationDtos.get(id));
     }
 
@@ -25,21 +26,15 @@ public class NotificationDtoRepository {
         return notificationDtos.containsKey(id);
     }
 
-    public List<NotificationDto> findAllByUserId(UUID userId) {
+    public Collection<NotificationDto> findAllByUserId(final UUID userId) {
         return notificationDtos.values().stream()
                 .filter(e -> e.getUserId().equals(userId))
                 .sorted(sortNotifications())
                 .collect(Collectors.toList());
     }
 
-    public List<NotificationDto> findAll() {
-        return notificationDtos.values().stream()
-                .sorted(sortNotifications())
-                .collect(Collectors.toList());
-    }
-
     public NotificationDto createIfNotExists(final NotificationDto notificationDto) {
-        Objects.requireNonNull(notificationDto, "'notificationDto' cannot be null");
+        requireNonNull(notificationDto, "'notificationDto' cannot be null");
         notificationDtos.put(notificationDto.getId(), notificationDto);
         return notificationDto;
     }

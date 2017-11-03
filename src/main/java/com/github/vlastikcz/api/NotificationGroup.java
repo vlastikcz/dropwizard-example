@@ -6,7 +6,7 @@ public class NotificationGroup {
     private final NotificationEventType notificationEventType;
     private final Collection<Notification> notifications;
 
-    public NotificationGroup(NotificationEventType notificationEventType, Collection<Notification> notifications) {
+    public NotificationGroup(final NotificationEventType notificationEventType, final Collection<Notification> notifications) {
         this.notificationEventType = notificationEventType;
         this.notifications = notifications;
     }

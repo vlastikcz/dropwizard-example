@@ -15,7 +15,7 @@ public class User {
     @JsonSerialize(using = LinkSerializer.class)
     private final Collection<Link> links;
 
-    public User(UUID id, Collection<Link> links) {
+    public User(final UUID id, final Collection<Link> links) {
         this.id = id;
         this.links = links;
     }

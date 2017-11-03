@@ -19,20 +19,12 @@ public class Notification {
     @JsonSerialize(using = LinkSerializer.class)
     private final Collection<Link> links;
 
-    public Notification(UUID id, UUID userId, String title, String content, Collection<Link> links) {
+    public Notification(final UUID id, final UUID userId, final String title, final String content, final Collection<Link> links) {
         this.id = id;
         this.userId = userId;
         this.title = title;
         this.content = content;
         this.links = links;
-    }
-
-    public static String getNotificationActionsLinkRel() {
-        return NOTIFICATION_ACTIONS_LINK_REL;
-    }
-
-    public static String getSelfLinkRel() {
-        return SELF_LINK_REL;
     }
 
     public UUID getId() {
