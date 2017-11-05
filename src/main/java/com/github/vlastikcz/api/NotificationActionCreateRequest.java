@@ -1,6 +1,7 @@
 package com.github.vlastikcz.api;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,5 +35,33 @@ public class NotificationActionCreateRequest {
 
     public Optional<Instant> getNotificationActionTimestamp() {
         return notificationActionTimestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "NotificationActionCreateRequest{" +
+                "id=" + id +
+                ", notificationActionType=" + notificationActionType +
+                ", notificationActionTimestamp=" + notificationActionTimestamp +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        NotificationActionCreateRequest that = (NotificationActionCreateRequest) o;
+        return Objects.equals(id, that.id) &&
+                notificationActionType == that.notificationActionType &&
+                Objects.equals(notificationActionTimestamp, that.notificationActionTimestamp);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, notificationActionType, notificationActionTimestamp);
     }
 }

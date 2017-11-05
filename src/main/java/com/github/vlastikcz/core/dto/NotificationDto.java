@@ -12,7 +12,7 @@ import com.github.vlastikcz.api.NotificationEventType;
 
 import static com.github.vlastikcz.api.Notification.NOTIFICATION_ACTIONS_LINK_REL;
 import static com.github.vlastikcz.api.Notification.SELF_LINK_REL;
-import static com.github.vlastikcz.resources.NotificationActionResource.NOTIFICATION_ACTION_BY_NOTIFICATION_PATH;
+import static com.github.vlastikcz.resources.NotificationActionByNotificationResource.NOTIFICATION_ACTION_BY_NOTIFICATION_PATH;
 import static com.github.vlastikcz.resources.NotificationResource.NOTIFICATION_BY_ID_PATH;
 
 public class NotificationDto {

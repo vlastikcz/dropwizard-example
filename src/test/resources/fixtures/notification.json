@@ -1,0 +1,12 @@
+{
+  "id": "5e7826c3-7926-41bb-804b-9f30e1072645",
+  "userId": "15750341-8f06-4829-ad77-2d3b47cae9fa",
+  "title": "title",
+  "content": "content",
+  "links": [
+    {
+      "rel": "self",
+      "href": "http://127.0.0.1/self-link"
+    }
+  ]
+}

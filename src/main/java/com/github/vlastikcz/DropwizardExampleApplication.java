@@ -5,6 +5,7 @@ import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.vlastikcz.health.NotificationActionHealthCheck;
 import com.github.vlastikcz.health.NotificationHealthCheck;
+import com.github.vlastikcz.resources.NotificationActionByNotificationResource;
 import com.github.vlastikcz.resources.NotificationActionResource;
 import com.github.vlastikcz.resources.NotificationResource;
 import com.github.vlastikcz.resources.UserNotificationGroupResource;
@@ -35,9 +36,9 @@ public class DropwizardExampleApplication extends Application<DropwizardExampleC
                     final Environment environment) {
         final JerseyEnvironment jersey = environment.jersey();
         jersey.register(new NotificationResource(configuration.notificationService()));
-        jersey.register(new NotificationActionResource(configuration.notificationActionService(), configuration.notificationActionFactory()));
+        jersey.register(new NotificationActionResource(configuration.notificationActionService()));
         jersey.register(new UserNotificationGroupResource(configuration.notificationGroupService()));
-        jersey.register(new NotificationActionResource(configuration.notificationActionService(), configuration.notificationActionFactory()));
+        jersey.register(new NotificationActionByNotificationResource(configuration.notificationActionService(), configuration.notificationActionFactory()));
         jersey.register(new UserResource(configuration.userService()));
         jersey.getResourceConfig()
                 .packages("org.glassfish.jersey.examples.linking")

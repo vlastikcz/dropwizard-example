@@ -1,7 +1,6 @@
 package com.github.vlastikcz.core.serializer;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.ws.rs.core.Link;
 
@@ -9,15 +8,11 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-public class LinkSerializer extends JsonSerializer<List<Link>> {
+public class LinkSerializer extends JsonSerializer<Link> {
 
     @Override
-    public void serialize(List<Link> links, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        jsonGenerator.writeStartArray();
-        for (final Link link : links) {
-            serializeLink(link, jsonGenerator);
-        }
-        jsonGenerator.writeEndArray();
+    public void serialize(Link link, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+        serializeLink(link, jsonGenerator);
     }
 
     private void serializeLink(Link link, JsonGenerator jsonGenerator) throws IOException {

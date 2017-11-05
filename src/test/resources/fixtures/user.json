@@ -1,0 +1,9 @@
+{
+  "id": "38c878bf-2d17-4377-aed9-7f0f19238793",
+  "links": [
+    {
+      "rel": "self",
+      "href": "http://127.0.0.1/self-link"
+    }
+  ]
+}
