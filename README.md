@@ -1,5 +1,7 @@
 # DropwizardExample
 
+[![Build Status](https://travis-ci.org/vlastikcz/dropwizard-example.svg?branch=master)](https://travis-ci.org/vlastikcz/dropwizard-example)
+
 How to start the DropwizardExample application
 ---
 
