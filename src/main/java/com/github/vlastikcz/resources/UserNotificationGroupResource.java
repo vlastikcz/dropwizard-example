@@ -26,6 +26,6 @@ public class UserNotificationGroupResource {
 
     @GET
     public Response getNotificationGroups(@PathParam("userId") UUID userId) {
-        return Response.ok(notificationGroupService.findByUserId(userId)).build();
+        return Response.ok(notificationGroupService.findNotDeletedByUserId(userId)).build();
     }
 }

@@ -52,7 +52,7 @@ public class UserNotificationGroupResourceTest {
         );
         final List<NotificationGroup> expected = Collections.singletonList(notificationGroup);
 
-        expect(notificationGroupService.findByUserId(userId)).andReturn(expected);
+        expect(notificationGroupService.findNotDeletedByUserId(userId)).andReturn(expected);
         replay(notificationGroupService);
         final List<NotificationGroup> actual = resourceTestRule.target("/user/" + userId + "/notification-group").request()
                 .get(new GenericType<List<NotificationGroup>>() {
@@ -65,7 +65,7 @@ public class UserNotificationGroupResourceTest {
     public void getGroupsReturnsEmptyArrayIfNotificationsAreEmpty() {
         final UUID userId = UUID.fromString("fc6a2d21-b819-420b-a1b3-e7a18699b351");
 
-        expect(notificationGroupService.findByUserId(userId)).andReturn(emptyList());
+        expect(notificationGroupService.findNotDeletedByUserId(userId)).andReturn(emptyList());
         replay(notificationGroupService);
         final List<NotificationGroup> actual = resourceTestRule.target("/user/" + userId + "/notification-group").request()
                 .get(new GenericType<List<NotificationGroup>>() {

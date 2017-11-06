@@ -38,7 +38,7 @@ public class DropwizardExampleConfiguration extends Configuration {
     }
 
     public NotificationGroupService notificationGroupService() {
-        return new NotificationGroupService(notificationDtoRepository);
+        return new NotificationGroupService(notificationDtoRepository, notificationActionDtoRepository);
     }
 
     public NotificationActionFactory notificationActionFactory() {
